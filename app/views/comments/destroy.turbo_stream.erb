@@ -1,0 +1,2 @@
+<%= turbo_stream.remove dom_id(@comment) %>
+<%= turbo_stream.update "post_#{@post.id}_comments_count" do %><%= @post.comments.size %><% end %>

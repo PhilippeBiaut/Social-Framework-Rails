@@ -1,0 +1,40 @@
+<% content_for :title, "Sign in" %>
+
+<div class="w-full max-w-md">
+  <div class="mb-6 text-center">
+    <span class="mx-auto mb-3 grid size-12 place-items-center rounded-2xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 text-white">
+      <svg class="size-7" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a4 4 0 100 8 4 4 0 000-8zM4 15a6 6 0 1112 0v1a1 1 0 01-1 1H5a1 1 0 01-1-1v-1z"/></svg>
+    </span>
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Welcome back</h1>
+    <p class="text-sm text-gray-500">Sign in to continue.</p>
+  </div>
+
+  <%= form_with url: session_url, class: "card space-y-4 p-6",
+        data: { controller: "password-visibility" } do |form| %>
+    <div>
+      <%= form.label :email_address, "Email", class: "label" %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username",
+            value: params[:email_address], placeholder: "you@example.com", class: "input" %>
+    </div>
+
+    <div>
+      <div class="flex items-center justify-between">
+        <%= form.label :password, class: "label !mb-0" %>
+        <%= link_to "Forgot password?", new_password_path, class: "text-xs text-indigo-600 hover:underline dark:text-indigo-400" %>
+      </div>
+      <div class="relative mt-2">
+        <%= form.password_field :password, required: true, autocomplete: "current-password", maxlength: 72,
+              placeholder: "Your password", class: "input pr-10",
+              data: { password_visibility_target: "field" } %>
+        <%= render "shared/password_toggle" %>
+      </div>
+    </div>
+
+    <%= form.submit "Sign in", class: "btn-primary w-full cursor-pointer" %>
+  <% end %>
+
+  <p class="mt-5 text-center text-sm text-gray-500">
+    New here?
+    <%= link_to "Create an account", new_registration_path, class: "font-semibold text-indigo-600 hover:underline dark:text-indigo-400" %>
+  </p>
+</div>

@@ -1,0 +1,44 @@
+<%= form_with model: post, url: posts_path, class: "space-y-3",
+      data: { controller: "char-counter image-preview", char_counter_max_value: 1000,
+              action: "turbo:submit-end->char-counter#update" } do |f| %>
+
+  <% if post.errors.any? %>
+    <div class="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/40 dark:text-red-300">
+      <%= post.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <div class="flex gap-3">
+    <%= avatar_for current_user, size: "size-10", link: false %>
+    <div class="flex-1 space-y-2">
+      <%= f.text_area :body, rows: 2, placeholder: "What's happening?",
+            data: { controller: "autosize",
+                    char_counter_target: "input",
+                    action: "input->char-counter#update input->autosize#resize" },
+            class: "w-full resize-none border-0 bg-transparent p-0 text-base text-gray-900 placeholder-gray-400 focus:ring-0 dark:text-white" %>
+
+      <%# Image preview %>
+      <div data-image-preview-target="wrapper" class="relative hidden">
+        <img data-image-preview-target="image" class="max-h-80 w-full rounded-xl object-cover" alt="Preview">
+        <button type="button" data-action="image-preview#clear"
+                class="absolute right-2 top-2 grid size-8 place-items-center rounded-full bg-black/60 text-white hover:bg-black/80">
+          <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between border-t border-gray-100 pt-3 dark:border-gray-700">
+    <label class="btn-ghost cursor-pointer !px-2.5 text-indigo-500" title="Add photo">
+      <svg class="size-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+      <%= f.file_field :image, accept: "image/*", class: "hidden",
+            data: { image_preview_target: "input", action: "image-preview#preview" } %>
+    </label>
+
+    <div class="flex items-center gap-3">
+      <span class="text-sm tabular-nums text-gray-400" data-char-counter-target="output">1000</span>
+      <%= f.submit "Post", data: { char_counter_target: "submit" },
+            class: "btn-primary cursor-pointer disabled:cursor-not-allowed disabled:opacity-40" %>
+    </div>
+  </div>
+<% end %>

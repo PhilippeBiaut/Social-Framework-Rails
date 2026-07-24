@@ -1,0 +1,13 @@
+<div class="card flex items-center gap-3 p-3">
+  <%= avatar_for user_row, size: "size-11" %>
+  <div class="min-w-0 flex-1">
+    <%= link_to user_path(user_row), class: "block" do %>
+      <p class="truncate font-semibold text-gray-900 hover:underline dark:text-white"><%= user_row.display_name %></p>
+      <p class="truncate text-sm text-gray-400">@<%= user_row.username %></p>
+    <% end %>
+    <% if user_row.bio.present? %>
+      <p class="mt-0.5 line-clamp-1 text-sm text-gray-500"><%= user_row.bio %></p>
+    <% end %>
+  </div>
+  <%= render "follows/button", user: user_row %>
+</div>

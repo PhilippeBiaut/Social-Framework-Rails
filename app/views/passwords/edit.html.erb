@@ -1,0 +1,26 @@
+<% content_for :title, "Update password" %>
+
+<div class="w-full max-w-md">
+  <div class="mb-6 text-center">
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Update your password</h1>
+  </div>
+
+  <%= form_with url: password_path(params[:token]), method: :put, class: "card space-y-4 p-6",
+        data: { controller: "password-visibility" } do |form| %>
+    <div>
+      <%= form.label :password, "New password", class: "label" %>
+      <div class="relative">
+        <%= form.password_field :password, required: true, autocomplete: "new-password", maxlength: 72,
+              placeholder: "Enter new password", class: "input pr-10",
+              data: { password_visibility_target: "field" } %>
+        <%= render "shared/password_toggle" %>
+      </div>
+    </div>
+    <div>
+      <%= form.label :password_confirmation, "Confirm password", class: "label" %>
+      <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", maxlength: 72,
+            placeholder: "Repeat new password", class: "input" %>
+    </div>
+    <%= form.submit "Save", class: "btn-primary w-full cursor-pointer" %>
+  <% end %>
+</div>

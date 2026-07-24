@@ -1,0 +1,17 @@
+<% content_for :title, "Feed" %>
+
+<%= render "posts/composer", post: @post %>
+
+<%# Feed tabs %>
+<div class="mt-6 flex rounded-xl border border-gray-200 bg-white p-1 text-sm font-medium dark:border-gray-700 dark:bg-gray-800">
+  <% tab_class = ->(active) { active ? "bg-indigo-600 text-white shadow" : "text-gray-500 hover:text-gray-900 dark:hover:text-white" } %>
+  <%= link_to "For you", root_path, class: "flex-1 rounded-lg px-3 py-1.5 text-center transition #{tab_class.call(@tab == 'following')}" %>
+  <%= link_to "Explore", root_path(tab: "explore"), class: "flex-1 rounded-lg px-3 py-1.5 text-center transition #{tab_class.call(@tab == 'explore')}" %>
+</div>
+
+<div id="posts" class="mt-4 space-y-4">
+  <% if @posts.empty? %>
+    <%= render "posts/empty" %>
+  <% end %>
+  <%= render "posts/page", posts: @posts, has_more: @has_more, tab: @tab, before: params[:before] %>
+</div>

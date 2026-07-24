@@ -1,0 +1,57 @@
+<% content_for :title, "Edit profile" %>
+
+<h1 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Edit profile</h1>
+
+<%= form_with model: @user, url: profile_path, method: :patch,
+      class: "card space-y-5 p-5",
+      data: { controller: "image-preview char-counter", char_counter_max_value: 280 } do |f| %>
+
+  <% if @user.errors.any? %>
+    <div class="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/40 dark:text-red-300">
+      <ul class="list-inside list-disc">
+        <% @user.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="flex items-center gap-4">
+    <div>
+      <div data-image-preview-target="placeholder"><%= avatar_for @user, size: "size-20", text: "text-xl", link: false, ring: false %></div>
+      <div data-image-preview-target="wrapper" class="hidden">
+        <img data-image-preview-target="image" class="size-20 rounded-full object-cover" alt="New avatar">
+      </div>
+    </div>
+    <label class="btn-outline cursor-pointer">
+      Change photo
+      <%= f.file_field :avatar, accept: "image/*", class: "hidden",
+            data: { image_preview_target: "input", action: "image-preview#preview" } %>
+    </label>
+  </div>
+
+  <div>
+    <%= f.label :username, class: "label" %>
+    <div class="flex">
+      <span class="inline-flex items-center rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 px-3 text-sm text-gray-500 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-300">@</span>
+      <%= f.text_field :username, class: "input !rounded-l-none", autocomplete: "off" %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :name, "Display name", class: "label" %>
+    <%= f.text_field :name, class: "input", placeholder: "Your name" %>
+  </div>
+
+  <div>
+    <%= f.label :bio, class: "label" %>
+    <%= f.text_area :bio, rows: 3,
+          data: { controller: "autosize", char_counter_target: "input",
+                  action: "input->char-counter#update input->autosize#resize" },
+          class: "input resize-none", placeholder: "Tell people about yourself" %>
+    <p class="mt-1 text-right text-xs text-gray-400"><span data-char-counter-target="output">280</span> left</p>
+  </div>
+
+  <div class="flex items-center gap-3">
+    <%= f.submit "Save changes", class: "btn-primary cursor-pointer" %>
+    <%= link_to "Cancel", user_path(@user), class: "btn-ghost" %>
+  </div>
+<% end %>

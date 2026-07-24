@@ -1,0 +1,8 @@
+<%# Slide the new post to the top of the feed and reset the composer. %>
+<%= turbo_stream.prepend "posts" do %>
+  <%= render "posts/post", post: @post %>
+<% end %>
+
+<%= turbo_stream.replace "post_form" do %>
+  <%= render "posts/composer", post: Post.new %>
+<% end %>

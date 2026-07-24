@@ -1,0 +1,9 @@
+<%= turbo_stream.append "post_#{@post.id}_comments" do %>
+  <%= render "comments/comment", comment: @comment %>
+<% end %>
+
+<%= turbo_stream.replace "post_#{@post.id}_comment_form" do %>
+  <%= render "comments/form", post: @post, comment: Comment.new %>
+<% end %>
+
+<%= turbo_stream.update "post_#{@post.id}_comments_count" do %><%= @post.comments.size %><% end %>

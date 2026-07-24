@@ -1,0 +1,20 @@
+<%= form_with model: [ post, comment ], id: "post_#{post.id}_comment_form",
+      class: "flex gap-3",
+      data: { controller: "char-counter", char_counter_max_value: 500 } do |f| %>
+  <%= avatar_for current_user, size: "size-9", text: "text-xs", link: false %>
+  <div class="flex-1">
+    <% if comment.errors.any? %>
+      <p class="mb-1 text-xs text-red-600"><%= comment.errors.full_messages.to_sentence %></p>
+    <% end %>
+    <div class="card flex items-end gap-2 px-3 py-2">
+      <%= f.text_area :body, rows: 1, placeholder: "Write a comment…",
+            data: { controller: "autosize",
+                    char_counter_target: "input",
+                    action: "input->char-counter#update input->autosize#resize" },
+            class: "w-full resize-none border-0 bg-transparent p-0 text-sm text-gray-900 placeholder-gray-400 focus:ring-0 dark:text-white" %>
+      <span class="text-xs tabular-nums text-gray-300" data-char-counter-target="output">500</span>
+      <%= f.submit "Send", data: { char_counter_target: "submit" },
+            class: "btn-primary !px-3 !py-1.5 cursor-pointer disabled:opacity-40" %>
+    </div>
+  </div>
+<% end %>
