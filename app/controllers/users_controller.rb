@@ -3,12 +3,17 @@ class UsersController < ApplicationController
 
   def index
     @users = User.where.not(id: current_user.id).order(created_at: :desc)
-    @users = @users.where("username LIKE :q OR name LIKE :q", q: "%#{params[:q]}%") if params[:q].present?
+
+    if params[:q].present?
+      # Escape %/_ so they are searched literally instead of acting as wildcards.
+      term = "%#{User.sanitize_sql_like(params[:q])}%"
+      @users = @users.where("username LIKE :q OR name LIKE :q", q: term)
+    end
   end
 
   def show
-    @posts = @user.posts.includes(:user, :likes, image_attachment: :blob).recent
-    @liked = @user.liked_posts.includes(:user, :likes, image_attachment: :blob).order("posts.created_at DESC")
+    @posts = @user.posts.with_card_data.recent
+    @liked = @user.liked_posts.with_card_data.recent
   end
 
   def following

@@ -1,6 +1,8 @@
 class Comment < ApplicationRecord
   belongs_to :user
-  belongs_to :post, counter_cache: false
+  # Explicit inverse: Post's `has_many :comments` carries a scope, which
+  # disables automatic inverse detection and would re-query `comment.post`.
+  belongs_to :post, inverse_of: :comments
 
   validates :body, presence: true, length: { maximum: 500 }
 

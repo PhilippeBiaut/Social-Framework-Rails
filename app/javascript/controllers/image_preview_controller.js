@@ -19,7 +19,7 @@ export default class extends Controller {
     reader.onload = (e) => {
       this.imageTarget.src = e.target.result
       this.wrapperTarget.classList.remove("hidden")
-      this.placeholderTarget?.classList.add("hidden")
+      this.togglePlaceholder(true)
     }
     reader.readAsDataURL(file)
   }
@@ -29,6 +29,12 @@ export default class extends Controller {
     this.inputTarget.value = ""
     this.imageTarget.src = ""
     this.wrapperTarget.classList.add("hidden")
-    this.placeholderTarget?.classList.remove("hidden")
+    this.togglePlaceholder(false)
+  }
+
+  // The placeholder is optional (the composer has none), and Stimulus throws
+  // when a singular target is missing — so guard with hasPlaceholderTarget.
+  togglePlaceholder(hidden) {
+    if (this.hasPlaceholderTarget) this.placeholderTarget.classList.toggle("hidden", hidden)
   }
 }

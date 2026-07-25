@@ -44,15 +44,10 @@ class User < ApplicationRecord
     following.exists?(other_user.id)
   end
 
-  def liked?(post)
-    likes.exists?(post_id: post.id)
-  end
-
-  # Posts from the people I follow + my own, newest first.
+  # Posts from the people I follow, plus my own. Callers add ordering, eager
+  # loading and pagination so the feed can be sliced without duplicating this.
   def feed
     Post.where(user_id: following_ids + [ id ])
-        .includes(:user, :likes, image_attachment: :blob)
-        .recent
   end
 
   # Use the username in generated URLs (/users/:username).

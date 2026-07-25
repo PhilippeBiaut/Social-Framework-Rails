@@ -49,23 +49,29 @@ POSTS = [
   [ sam,      "Small controllers, small partials, small everything. Composition scales." ]
 ]
 
-posts = POSTS.map.with_index do |(user, body), i|
-  post = user.posts.create!(body: body)
-  post.update_column(:created_at, i.hours.ago) # spread them out on the timeline
+# Insert oldest first so ids grow with time, the way real traffic writes them.
+# The feed pages on an id cursor, so backdating in reverse would make the demo
+# data order by id disagree with order by created_at.
+posts = POSTS.reverse.map.with_index do |(user, body), i|
+  post = user.posts.find_or_create_by!(body: body)
+  post.update_column(:created_at, (POSTS.size - 1 - i).hours.ago)
   post
-end
+end.reverse
 
 puts "Adding likes & comments…"
-posts.each do |post|
-  users.sample(rand(1..4)).each { |u| u.likes.find_or_create_by!(post: post) }
+# Deterministic spread of likes (no rand) so re-seeding is a no-op.
+posts.each_with_index do |post, i|
+  users.rotate(i).first(1 + (i % 4)).each { |u| u.likes.find_or_create_by!(post: post) }
 end
 
-Comment.create!([
-  { user: grace, post: posts.first, body: "Welcome aboard! 🎉" },
-  { user: dhh,   post: posts.first, body: "Great to have you here." },
-  { user: ada,   post: posts[3],    body: "This is exactly what I was looking for. Thanks Sam!" },
-  { user: linus, post: posts[2],    body: "Six lines? Rookie numbers." }
-])
+[
+  [ grace, 0, "Welcome aboard! 🎉" ],
+  [ dhh,   0, "Great to have you here." ],
+  [ ada,   3, "This is exactly what I was looking for. Thanks Sam!" ],
+  [ linus, 2, "Six lines? Rookie numbers." ]
+].each do |user, index, body|
+  Comment.find_or_create_by!(user: user, post: posts[index], body: body)
+end
 
 puts "Done! #{User.count} users, #{Post.count} posts, #{Comment.count} comments, #{Like.count} likes."
 puts "Sign in with any of: #{PEOPLE.map { |p| p[:username] + '@example.com' }.join(', ')} (password: 'password')"

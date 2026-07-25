@@ -11,7 +11,7 @@
 
 <div id="posts" class="mt-4 space-y-4">
   <% if @posts.empty? %>
-    <%= render "posts/empty" %>
+    <%= render "posts/empty", tab: @tab %>
   <% end %>
   <%= render "posts/page", posts: @posts, has_more: @has_more, tab: @tab, before: params[:before] %>
 </div>

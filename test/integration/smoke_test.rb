@@ -69,4 +69,34 @@ class SmokeTest < ActionDispatch::IntegrationTest
     get root_path
     assert_redirected_to new_session_path
   end
+
+  # Regression: the feed pages on an `id` cursor, so its ordering must be by id
+  # too. Ordering by created_at while cursoring on id repeated or skipped posts
+  # whenever the two disagreed (e.g. backdated records).
+  test "cursor pagination walks every post exactly once" do
+    author = users(:one)
+    reader = users(:two)
+    created = 25.times.map { |i| author.posts.create!(body: "Post number #{i}") }
+    # Backdate in the opposite order of insertion to force the two orders apart.
+    created.each_with_index { |post, i| post.update_column(:created_at, i.hours.ago) }
+
+    sign_in_as reader
+    expected = Post.pluck(:id).sort
+
+    seen = []
+    cursor = nil
+    10.times do
+      get root_path(tab: "explore", before: cursor)
+      assert_response :success
+      ids = css_select("#posts article").map { |el| el["id"].delete_prefix("post_").to_i }
+      break if ids.empty?
+
+      seen.concat(ids)
+      cursor = ids.last
+    end
+
+    assert_equal expected.size, seen.size, "expected no duplicated or skipped posts"
+    assert_equal expected, seen.sort
+    assert_equal seen.sort.reverse, seen, "feed should stay newest-first across pages"
+  end
 end
