@@ -5,6 +5,10 @@ A small but complete **social network** built with **Ruby on Rails 8**, styled
 with **Tailwind CSS + Flowbite**, and made interactive with **Hotwire (Turbo +
 Stimulus)** — no build step, no SPA framework, just HTML over the wire.
 
+> **Also available in Laravel.** The same app, rebuilt on Laravel 13 +
+> Livewire 4 + Alpine with the identical Flowbite design system, lives in
+> [`laravel/`](laravel/README.md).
+
 ![Rails](https://img.shields.io/badge/Rails-8.1-CC0000?logo=rubyonrails&logoColor=white)
 ![Tailwind](https://img.shields.io/badge/Tailwind-v4-38BDF8?logo=tailwindcss&logoColor=white)
 ![Flowbite](https://img.shields.io/badge/Flowbite-4-1A56DB)
