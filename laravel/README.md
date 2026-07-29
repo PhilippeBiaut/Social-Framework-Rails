@@ -83,6 +83,11 @@ php artisan serve
 
 Then open http://localhost:8000.
 
+The password-reset mail is a queued notification, and `QUEUE_CONNECTION`
+defaults to `sync` so it is delivered in-process without a separate worker (the
+Rails port behaves the same way in development). In production switch it to
+`database` and run `php artisan queue:work`.
+
 ### Demo accounts
 
 Seeded users (password: `password`): `ada@example.com`, `grace@example.com`,

@@ -14,8 +14,16 @@ class UsersController < ApplicationController
   end
 
   def show
-    @posts = @user.posts.with_card_data.recent
-    @liked = @user.liked_posts.with_card_data.recent
+    # Only the active tab is rendered. Rendering both put the same post in the
+    # DOM twice whenever an author liked their own post, which duplicated its
+    # element ids and left one copy stale after a Turbo Stream update.
+    @tab = params[:tab] == "likes" ? "likes" : "posts"
+
+    @posts = if @tab == "likes"
+      @user.liked_posts.with_card_data.recent
+    else
+      @user.posts.with_card_data.recent
+    end
   end
 
   def following

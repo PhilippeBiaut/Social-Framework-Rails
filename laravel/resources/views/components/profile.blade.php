@@ -1,12 +1,15 @@
 <?php
 
 use App\Models\User;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
 new class extends Component
 {
     public User $user;
 
+    /** In the URL so the active tab is shareable, like the Rails port. */
+    #[Url]
     public string $tab = 'posts';
 
     public function mount(User $user): void

@@ -38,30 +38,26 @@
   </div>
 </div>
 
-<%# Client-side tabs (Stimulus) — Posts / Likes %>
-<div class="mt-6" data-controller="tabs"
-     data-tabs-active-class="border-indigo-600 text-indigo-600 dark:text-indigo-400"
-     data-tabs-inactive-class="border-transparent text-gray-500 hover:text-gray-900 dark:hover:text-white">
-  <div class="flex border-b border-gray-200 text-sm font-medium dark:border-gray-700">
-    <a href="#" data-tabs-target="tab" data-action="tabs#select" data-index="0"
-       class="-mb-px border-b-2 px-4 py-2.5" role="tab">Posts</a>
-    <a href="#" data-tabs-target="tab" data-action="tabs#select" data-index="1"
-       class="-mb-px border-b-2 px-4 py-2.5" role="tab">Likes</a>
-  </div>
-
-  <div data-tabs-target="panel" data-index="0" class="mt-4 space-y-4">
-    <% if @posts.any? %>
-      <%= render partial: "posts/post", collection: @posts %>
-    <% else %>
-      <p class="card p-6 text-center text-sm text-gray-500"><%= @user.display_name %> hasn't posted yet.</p>
+<%# Posts / Likes. Only the active tab is rendered: a post an author liked
+    themselves would otherwise appear in both panels with the same element ids. %>
+<div class="mt-6">
+  <div class="flex border-b border-gray-200 text-sm font-medium dark:border-gray-700" role="tablist">
+    <% { "posts" => "Posts", "likes" => "Likes" }.each do |value, label| %>
+      <%= link_to label, user_path(@user, tab: value), role: "tab",
+            "aria-selected": (@tab == value).to_s,
+            class: "-mb-px border-b-2 px-4 py-2.5 #{@tab == value ?
+              'border-indigo-600 text-indigo-600 dark:text-indigo-400' :
+              'border-transparent text-gray-500 hover:text-gray-900 dark:hover:text-white'}" %>
     <% end %>
   </div>
 
-  <div data-tabs-target="panel" data-index="1" class="mt-4 hidden space-y-4">
-    <% if @liked.any? %>
-      <%= render partial: "posts/post", collection: @liked %>
+  <div class="mt-4 space-y-4">
+    <% if @posts.any? %>
+      <%= render partial: "posts/post", collection: @posts %>
     <% else %>
-      <p class="card p-6 text-center text-sm text-gray-500">No liked posts yet.</p>
+      <p class="card p-6 text-center text-sm text-gray-500">
+        <%= @tab == "likes" ? "No liked posts yet." : "#{@user.display_name} hasn't posted yet." %>
+      </p>
     <% end %>
   </div>
 </div>

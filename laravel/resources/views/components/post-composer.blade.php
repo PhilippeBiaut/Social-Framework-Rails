@@ -57,7 +57,7 @@ new class extends Component
                 @if ($image)
                     <div class="relative">
                         <img src="{{ $image->temporaryUrl() }}" alt="Preview" class="max-h-80 w-full rounded-xl object-cover">
-                        <button type="button" wire:click="removeImage"
+                        <button type="button" wire:click="removeImage" aria-label="Remove image"
                                 class="absolute right-2 top-2 grid size-8 place-items-center rounded-full bg-black/60 text-white hover:bg-black/80">
                             <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                         </button>
