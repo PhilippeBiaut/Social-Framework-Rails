@@ -2,7 +2,9 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show following followers]
 
   def index
-    @users = User.where.not(id: current_user.id).order(created_at: :desc)
+    # `id` breaks ties: users seeded in the same second would otherwise come
+    # back in whatever order the database felt like.
+    @users = User.where.not(id: current_user.id).order(created_at: :desc, id: :desc)
 
     if params[:q].present?
       # Escape %/_ so they are searched literally instead of acting as wildcards.

@@ -25,7 +25,8 @@ class Post extends Model
 
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class)->oldest();
+        // `id` breaks ties so two comments written in the same second keep a stable order.
+        return $this->hasMany(Comment::class)->oldest()->orderBy('id');
     }
 
     public function likes(): HasMany

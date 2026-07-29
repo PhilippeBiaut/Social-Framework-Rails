@@ -12,7 +12,9 @@ new #[Title('People')] class extends Component
 
     public function with(): array
     {
-        $query = User::whereKeyNot(auth()->id())->latest();
+        // `id` breaks ties: users seeded in the same second would otherwise come
+        // back in whatever order the database felt like.
+        $query = User::whereKeyNot(auth()->id())->latest()->orderByDesc('id');
 
         if ($this->q !== '') {
             // Escape %/_ so they are searched literally instead of as wildcards.

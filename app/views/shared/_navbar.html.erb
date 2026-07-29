@@ -40,7 +40,7 @@
           <%= link_to "My profile", user_path(current_user), class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700" %>
           <%= link_to "Edit profile", edit_profile_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700" %>
           <div class="my-1 border-t border-gray-100 dark:border-gray-700"></div>
-          <%= button_to "Sign out", session_path, method: :delete, class: "block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100 dark:text-red-400 dark:hover:bg-gray-700" %>
+          <%= button_to "Sign out", logout_path, method: :post, class: "block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100 dark:text-red-400 dark:hover:bg-gray-700" %>
         </div>
       </div>
     </div>

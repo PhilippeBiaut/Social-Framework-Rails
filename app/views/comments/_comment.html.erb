@@ -9,8 +9,10 @@
           <%= timestamp comment.created_at %>
         </div>
         <% if comment.user == current_user %>
+          <%# `display: contents` keeps the form button_to wraps us in from
+              adding a line box of its own to the flex row. %>
           <%= button_to post_comment_path(comment.post, comment), method: :delete,
-                form: { data: { turbo_confirm: "Delete this comment?" } },
+                form: { data: { turbo_confirm: "Delete this comment?" }, class: "contents" },
                 class: "text-gray-300 hover:text-red-500" do %>
             <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
           <% end %>

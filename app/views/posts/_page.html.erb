@@ -1,12 +1,16 @@
 <%# One "page" of the feed. The lazy nested frame gives us infinite scroll for
-    free — Turbo loads it automatically when it scrolls into view. %>
-<%= turbo_frame_tag "page_#{before || 'first'}" do %>
+    free — Turbo loads it automatically when it scrolls into view.
+
+    The frame carries `block space-y-4` itself: <turbo-frame> is inline by
+    default, so the container's spacing would apply to the frame instead of to
+    the posts inside it, leaving the cards flush against each other. %>
+<%= turbo_frame_tag "page_#{before || 'first'}", class: "block space-y-4" do %>
   <%= render partial: "posts/post", collection: posts %>
 
   <% if has_more %>
     <%= turbo_frame_tag "page_#{posts.last.id}",
           src: posts_path(before: posts.last.id, tab: tab),
-          loading: :lazy do %>
+          loading: :lazy, class: "block space-y-4" do %>
       <div class="flex justify-center py-6">
         <svg class="size-6 animate-spin text-indigo-500" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

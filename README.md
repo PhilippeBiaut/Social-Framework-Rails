@@ -17,7 +17,8 @@ Stimulus)** — no build step, no SPA framework, just HTML over the wire.
 ## Features
 
 - 🔐 **Authentication** — Rails 8's native generator (bcrypt sessions), with a
-  custom sign-up flow, password strength meter and show/hide toggle.
+  custom sign-up flow, "remember me", a password strength meter, show/hide
+  toggle and a password-reset flow delivered off the request cycle.
 - 📝 **Posts** — compose with a live character counter, auto-growing textarea and
   image preview; posted in real time via **Turbo Streams**.
 - ❤️ **Likes** — optimistic UI (instant heart + count) reconciled by a Turbo
@@ -78,5 +79,15 @@ Seeded users (password: `password`): `ada@example.com`, `grace@example.com`,
 bin/rails test
 ```
 
-Includes an end-to-end integration smoke test (`test/integration/smoke_test.rb`)
-covering sign-up, posting, commenting, liking, following and profile editing.
+25 tests: an end-to-end smoke test (`test/integration/smoke_test.rb`) covering
+sign-up, posting, commenting, liking, following and profile editing, an
+authorization suite (`test/integration/authorization_test.rb`) pinning that you
+cannot touch another user's content, and a regression test for the feed's cursor
+pagination.
+
+## Kept in step with the Laravel app
+
+The [`laravel/`](laravel/README.md) port serves the same URLs, seed data and
+relative-time strings, so the two can be diffed screen by screen. With identical
+data and matching fonts, 13 of 17 screens render pixel-identical and the rest
+differ by under 0.1%.

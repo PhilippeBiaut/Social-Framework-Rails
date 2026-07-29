@@ -121,18 +121,13 @@ new #[Title('Feed')] class extends Component
         @endforelse
 
         @if ($hasMore)
-            {{-- Auto-loads when the sentinel scrolls into view. --}}
+            {{-- Auto-loads when the sentinel scrolls into view; a spinner only,
+                 to match the Rails port's lazy frame. --}}
             <div x-data x-intersect.margin.300px="$wire.loadMore()" class="flex justify-center py-6">
-                <button type="button" wire:click="loadMore" wire:loading.attr="disabled" class="btn-outline">
-                    <span wire:loading.remove wire:target="loadMore">Load more</span>
-                    <span wire:loading wire:target="loadMore" class="flex items-center gap-2">
-                        <svg class="size-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                        </svg>
-                        Loading…
-                    </span>
-                </button>
+                <svg class="size-6 animate-spin text-indigo-500" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
             </div>
         @endif
     </div>

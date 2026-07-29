@@ -24,7 +24,10 @@
             </div>
 
             <div>
-                <label for="password" class="label !mb-0">Password</label>
+                <div class="flex items-center justify-between">
+                    <label for="password" class="label !mb-0">Password</label>
+                    <a href="{{ route('password.request') }}" class="text-xs text-indigo-600 hover:underline dark:text-indigo-400">Forgot password?</a>
+                </div>
                 <div class="relative mt-2">
                     <input id="password" name="password" required autocomplete="current-password" maxlength="72"
                            placeholder="Your password" class="input pr-10"

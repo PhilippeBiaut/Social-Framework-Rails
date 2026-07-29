@@ -2,7 +2,8 @@ class Post < ApplicationRecord
   belongs_to :user
   has_one_attached :image
 
-  has_many :comments, -> { order(created_at: :asc) }, inverse_of: :post, dependent: :destroy
+  # `id` breaks ties so two comments written in the same second keep a stable order.
+  has_many :comments, -> { order(created_at: :asc, id: :asc) }, inverse_of: :post, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :likers, through: :likes, source: :user
 

@@ -1,8 +1,6 @@
 <?php
 
-use App\Models\Post;
 use App\Models\User;
-use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component
@@ -13,17 +11,18 @@ new class extends Component
 
     public function mount(User $user): void
     {
-        $this->user = $user->loadCount(['posts', 'following', 'followers']);
+        $this->user = $user;
     }
 
-    #[On('follow-changed')]
-    public function refreshCounts(): void
-    {
-        $this->user->loadCount(['posts', 'following', 'followers']);
-    }
-
+    /**
+     * Counts are loaded on every render, not in mount(): Livewire re-hydrates
+     * the model from its id on each request, which drops withCount attributes
+     * and left the header showing no numbers after a tab switch or a follow.
+     */
     public function with(): array
     {
+        $this->user->loadCount(['posts', 'following', 'followers']);
+
         $posts = $this->tab === 'likes'
             ? $this->user->likedPosts()->withCardData()->recent()->get()
             : $this->user->posts()->withCardData()->recent()->get();

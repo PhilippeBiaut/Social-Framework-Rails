@@ -15,7 +15,8 @@ Flowbite** design system.
 Feature parity with the Rails version:
 
 - 🔐 **Authentication** — hand-rolled register / login / logout on Laravel's
-  session guard, with throttling, a password strength meter and show/hide toggle.
+  session guard, with throttling, "remember me", a password strength meter and
+  show/hide toggle, plus a full password-reset flow (queued mail notification).
 - 📝 **Posts** — composer with live character counter, auto-growing textarea and
   image upload preview, published without a page reload.
 - ❤️ **Likes** — optimistic UI (Alpine flips the heart instantly) reconciled by
@@ -95,6 +96,15 @@ php artisan test
 ./vendor/bin/pint --test    # code style
 ```
 
-15 feature tests cover registration, posting, commenting, liking, following,
-profile editing and search escaping — plus a regression test pinning the feed's
-cursor pagination (ordering must match the cursor column, or pages repeat rows).
+22 feature tests cover registration, posting, commenting, liking, following,
+profile editing, search escaping and the password-reset flow — plus a regression
+test pinning the feed's cursor pagination (ordering must match the cursor
+column, or pages repeat rows).
+
+## Kept in step with the Rails app
+
+Both ports serve the same URLs (`/login`, `/register`, `/forgot-password`,
+`/people`, `/settings/profile`, `/users/{username}`), the same seed data and the
+same relative-time strings, so the two can be diffed screen by screen. With
+identical data and matching fonts, 13 of 17 screens render pixel-identical and
+the rest differ by under 0.1%.

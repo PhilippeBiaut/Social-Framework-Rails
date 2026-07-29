@@ -17,9 +17,31 @@ module ApplicationHelper
   end
 
   def timestamp(time)
-    content_tag :time, "#{time_ago_in_words(time)} ago",
+    content_tag :time, relative_time(time),
                 datetime: time.iso8601, title: time.strftime("%B %-d, %Y at %H:%M"),
                 class: "text-xs text-gray-400"
+  end
+
+  # Deliberately hand-rolled rather than `time_ago_in_words`: it rounds ("about
+  # 7 months") where every other stack truncates, so the two ports would print
+  # different strings for the same instant. Floor every unit, no fuzzy prefix.
+  def relative_time(time)
+    seconds = (Time.current - time).to_i
+    return "just now" if seconds < 60
+
+    minutes = seconds / 60
+    return pluralize_unit(minutes, "minute") if minutes < 60
+
+    hours = minutes / 60
+    return pluralize_unit(hours, "hour") if hours < 24
+
+    days = hours / 24
+    return pluralize_unit(days, "day") if days < 30
+
+    months = days / 30
+    return pluralize_unit(months, "month") if months < 12
+
+    pluralize_unit(days / 365, "year")
   end
 
   # Flowbite-flavoured toast colours per flash type.
@@ -32,5 +54,11 @@ module ApplicationHelper
     else
       { icon: "i", ring: "text-indigo-500 bg-indigo-100 dark:bg-indigo-800 dark:text-indigo-200" }
     end
+  end
+
+  private
+
+  def pluralize_unit(count, unit)
+    "#{count} #{unit}#{"s" unless count == 1} ago"
   end
 end

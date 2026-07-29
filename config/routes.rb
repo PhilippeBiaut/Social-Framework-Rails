@@ -1,14 +1,26 @@
 Rails.application.routes.draw do
-  # Authentication (Rails 8 generator) + self-service registration
-  resource  :session
-  resources :passwords, param: :token
-  resource  :registration, only: %i[new create]
+  # Authentication. Only the actions that exist are declared, so no route can
+  # resolve to a missing action.
+  get  "login",  to: "sessions#new",     as: :new_session
+  post "login",  to: "sessions#create",  as: :session
+  post "logout", to: "sessions#destroy", as: :logout
+
+  get  "register", to: "registrations#new",    as: :new_registration
+  post "register", to: "registrations#create", as: :registration
+
+  get   "forgot-password",         to: "passwords#new",    as: :new_password
+  post  "forgot-password",         to: "passwords#create", as: :passwords
+  get   "reset-password/:token",   to: "passwords#edit",   as: :edit_password
+  patch "reset-password/:token",   to: "passwords#update", as: :password
 
   # Current user's own profile settings
-  resource  :profile, only: %i[edit update]
+  get   "settings/profile", to: "profiles#edit",   as: :edit_profile
+  patch "settings/profile", to: "profiles#update", as: :profile
 
   # People / social graph
-  resources :users, param: :username, only: %i[index show] do
+  get "people", to: "users#index", as: :users
+
+  resources :users, param: :username, only: %i[show], path: "users" do
     resource :follow, only: %i[create destroy]
     member do
       get :following
@@ -17,7 +29,7 @@ Rails.application.routes.draw do
   end
 
   # Posts and their nested engagement
-  resources :posts, only: %i[index show new create destroy] do
+  resources :posts, only: %i[index show create destroy] do
     resource  :like,     only: %i[create destroy]
     resources :comments, only: %i[create destroy]
   end

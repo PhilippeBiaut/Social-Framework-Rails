@@ -100,8 +100,11 @@ new #[Title('Edit profile')] class extends Component
 
         <div>
             <label for="bio" class="label">Bio</label>
+            {{-- Grows to fit its content on load as well as on input, matching
+                 the Rails port's autosize controller. --}}
             <textarea id="bio" wire:model="bio" rows="3" placeholder="Tell people about yourself"
-                      x-on:input="count = $event.target.value.length"
+                      x-init="$el.style.height = 'auto'; $el.style.height = $el.scrollHeight + 'px'"
+                      x-on:input="count = $event.target.value.length; $el.style.height = 'auto'; $el.style.height = $el.scrollHeight + 'px'"
                       class="input resize-none"></textarea>
             <p class="mt-1 text-right text-xs text-gray-400">
                 <span x-text="{{ $maxBio }} - count">{{ $maxBio - mb_strlen($bio) }}</span> left

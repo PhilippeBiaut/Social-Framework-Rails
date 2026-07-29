@@ -16,13 +16,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Kept byte-identical with db/seeds.rb so the two ports can be compared
+        // screen by screen.
         $people = [
             ['username' => 'ada', 'name' => 'Ada Lovelace', 'bio' => 'Writing the first algorithm, one loop at a time. 💻'],
             ['username' => 'grace', 'name' => 'Grace Hopper', 'bio' => 'Debugging since before it was cool. 🦟'],
             ['username' => 'linus', 'name' => 'Linus T.', 'bio' => 'Just for fun. Kernel enthusiast.'],
-            ['username' => 'dhh', 'name' => 'David H.', 'bio' => 'Convention over configuration. Rails forever. 🚀'],
+            ['username' => 'dhh', 'name' => 'David H.', 'bio' => 'Convention over configuration. Ship small. 🚀'],
             ['username' => 'yukihiro', 'name' => 'Yukihiro M.', 'bio' => 'Optimizing for developer happiness.'],
-            ['username' => 'taylor', 'name' => 'Taylor O.', 'bio' => 'Elegant code for artisans. Laravel. ✨'],
+            ['username' => 'sam', 'name' => 'Sam Stephenson', 'bio' => 'HTML over the wire. Fewer moving parts.'],
         ];
 
         $users = collect($people)->mapWithKeys(fn (array $attrs) => [
@@ -38,12 +40,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         foreach ([
-            ['ada', 'grace'], ['ada', 'dhh'], ['ada', 'taylor'],
+            ['ada', 'grace'], ['ada', 'dhh'], ['ada', 'sam'],
             ['grace', 'ada'], ['grace', 'linus'],
             ['linus', 'yukihiro'], ['linus', 'dhh'],
-            ['dhh', 'taylor'], ['dhh', 'yukihiro'], ['dhh', 'ada'],
-            ['yukihiro', 'dhh'], ['yukihiro', 'taylor'],
-            ['taylor', 'dhh'], ['taylor', 'ada'], ['taylor', 'grace'],
+            ['dhh', 'sam'], ['dhh', 'yukihiro'], ['dhh', 'ada'],
+            ['yukihiro', 'dhh'], ['yukihiro', 'sam'],
+            ['sam', 'dhh'], ['sam', 'ada'], ['sam', 'grace'],
         ] as [$follower, $followed]) {
             $users[$follower]->follow($users[$followed]);
         }
@@ -52,13 +54,13 @@ class DatabaseSeeder extends Seeder
             ['ada', 'Hello world 👋 Excited to join this little corner of the internet.'],
             ['grace', "Reminder: it's easier to ask forgiveness than permission. Ship it."],
             ['dhh', 'Just refactored a controller down to 6 lines. Convention over configuration is undefeated.'],
-            ['taylor', "Livewire + Alpine = server-driven UI without writing an API. Try it, you'll love it."],
-            ['yukihiro', 'A programming language should feel natural. Ruby was designed for humans first.'],
+            ['sam', "Server-rendered HTML with a sprinkle of JS beats a whole SPA. Try it, you'll love it."],
+            ['yukihiro', 'A programming language should feel natural. It should be designed for humans first.'],
             ['linus', 'Talk is cheap. Show me the code.'],
-            ['ada', 'Spent the afternoon reading about Livewire. Reactive UI without a single line of custom JS 🤯'],
-            ['dhh', 'Dark mode toggle in 10 lines of Alpine. The web platform is good, actually.'],
+            ['ada', 'Spent the afternoon reading about live updates. Reactive UI without a single line of custom JS 🤯'],
+            ['dhh', 'Dark mode toggle in 20 lines. The web platform is good, actually.'],
             ['grace', "The most dangerous phrase is 'we've always done it this way'."],
-            ['taylor', 'Small components, small views, small everything. Composition scales.'],
+            ['sam', 'Small controllers, small views, small everything. Composition scales.'],
         ];
 
         // Insert oldest first so ids grow with time, the way real traffic writes
@@ -92,7 +94,7 @@ class DatabaseSeeder extends Seeder
         foreach ([
             ['grace', 0, 'Welcome aboard! 🎉'],
             ['dhh', 0, 'Great to have you here.'],
-            ['ada', 3, 'This is exactly what I was looking for. Thanks Taylor!'],
+            ['ada', 3, 'This is exactly what I was looking for. Thanks Sam!'],
             ['linus', 2, 'Six lines? Rookie numbers.'],
         ] as [$username, $index, $body]) {
             Comment::firstOrCreate([

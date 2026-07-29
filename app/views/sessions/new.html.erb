@@ -30,6 +30,11 @@
       </div>
     </div>
 
+    <label class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+      <%= form.check_box :remember, { checked: false, class: "size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700" }, "1", nil %>
+      Remember me
+    </label>
+
     <%= form.submit "Sign in", class: "btn-primary w-full cursor-pointer" %>
   <% end %>
 

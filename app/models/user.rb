@@ -27,6 +27,8 @@ class User < ApplicationRecord
                        format: { with: /\A[a-z0-9_]+\z/, message: "only lowercase letters, numbers and underscores" }
   validates :name, length: { maximum: 60 }
   validates :bio, length: { maximum: 280 }
+  # has_secure_password only caps the length (72 bytes), it sets no floor.
+  validates :password, length: { minimum: 8 }, allow_nil: true
   validate :acceptable_avatar
 
   # --- Social helpers ---------------------------------------------------------

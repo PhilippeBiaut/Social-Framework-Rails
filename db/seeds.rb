@@ -3,13 +3,15 @@
 
 puts "Seeding users…"
 
+# Kept byte-identical with laravel/database/seeders/DatabaseSeeder.php so the
+# two ports can be compared screen by screen.
 PEOPLE = [
-  { username: "ada",     name: "Ada Lovelace",     bio: "Writing the first algorithm, one loop at a time. 💻" },
-  { username: "grace",   name: "Grace Hopper",     bio: "Debugging since before it was cool. 🦟" },
-  { username: "linus",   name: "Linus T.",         bio: "Just for fun. Kernel enthusiast." },
-  { username: "dhh",     name: "David H.",          bio: "Convention over configuration. Rails forever. 🚀" },
-  { username: "yukihiro", name: "Yukihiro M.",     bio: "Optimizing for developer happiness." },
-  { username: "sam",     name: "Sam Stephenson",   bio: "Hotwire, Turbo, Stimulus. HTML over the wire." }
+  { username: "ada",      name: "Ada Lovelace",   bio: "Writing the first algorithm, one loop at a time. 💻" },
+  { username: "grace",    name: "Grace Hopper",   bio: "Debugging since before it was cool. 🦟" },
+  { username: "linus",    name: "Linus T.",       bio: "Just for fun. Kernel enthusiast." },
+  { username: "dhh",      name: "David H.",       bio: "Convention over configuration. Ship small. 🚀" },
+  { username: "yukihiro", name: "Yukihiro M.",    bio: "Optimizing for developer happiness." },
+  { username: "sam",      name: "Sam Stephenson", bio: "HTML over the wire. Fewer moving parts." }
 ]
 
 users = PEOPLE.map do |attrs|
@@ -40,13 +42,13 @@ POSTS = [
   [ ada,      "Hello world 👋 Excited to join this little corner of the internet." ],
   [ grace,    "Reminder: it's easier to ask forgiveness than permission. Ship it." ],
   [ dhh,      "Just refactored a controller down to 6 lines. Convention over configuration is undefeated." ],
-  [ sam,      "Turbo Frames + Stimulus = no-build SPA feel with plain HTML. Try it, you'll love it." ],
-  [ yukihiro, "A programming language should feel natural. Ruby was designed for humans first." ],
+  [ sam,      "Server-rendered HTML with a sprinkle of JS beats a whole SPA. Try it, you'll love it." ],
+  [ yukihiro, "A programming language should feel natural. It should be designed for humans first." ],
   [ linus,    "Talk is cheap. Show me the code." ],
-  [ ada,      "Spent the afternoon reading about Turbo Streams. Real-time updates without a single line of custom JS 🤯" ],
-  [ dhh,      "Dark mode toggle in 20 lines of Stimulus. The web platform is good, actually." ],
+  [ ada,      "Spent the afternoon reading about live updates. Reactive UI without a single line of custom JS 🤯" ],
+  [ dhh,      "Dark mode toggle in 20 lines. The web platform is good, actually." ],
   [ grace,    "The most dangerous phrase is 'we've always done it this way'." ],
-  [ sam,      "Small controllers, small partials, small everything. Composition scales." ]
+  [ sam,      "Small controllers, small views, small everything. Composition scales." ]
 ]
 
 # Insert oldest first so ids grow with time, the way real traffic writes them.

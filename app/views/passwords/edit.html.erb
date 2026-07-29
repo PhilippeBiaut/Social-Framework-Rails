@@ -5,7 +5,7 @@
     <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Update your password</h1>
   </div>
 
-  <%= form_with url: password_path(params[:token]), method: :put, class: "card space-y-4 p-6",
+  <%= form_with url: password_path(params[:token]), method: :patch, class: "card space-y-4 p-6",
         data: { controller: "password-visibility" } do |form| %>
     <div>
       <%= form.label :password, "New password", class: "label" %>
