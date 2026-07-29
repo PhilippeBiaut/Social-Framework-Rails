@@ -1,17 +1,24 @@
 <% content_for :title, "Feed" %>
 
+<h1 class="sr-only">Your feed</h1>
+
 <%= render "posts/composer", post: @post %>
 
 <%# Feed tabs %>
-<div class="mt-6 flex rounded-xl border border-gray-200 bg-white p-1 text-sm font-medium dark:border-gray-700 dark:bg-gray-800">
+<div class="mt-6 flex rounded-xl border border-gray-200 bg-white p-1 text-sm font-medium dark:border-gray-700 dark:bg-gray-800" role="tablist">
   <% tab_class = ->(active) { active ? "bg-indigo-600 text-white shadow" : "text-muted hover:text-gray-900 dark:hover:text-white" } %>
-  <%= link_to "For you", root_path, class: "flex-1 rounded-lg px-3 py-1.5 text-center transition #{tab_class.call(@tab == 'following')}" %>
-  <%= link_to "Explore", root_path(tab: "explore"), class: "flex-1 rounded-lg px-3 py-1.5 text-center transition #{tab_class.call(@tab == 'explore')}" %>
+  <%= link_to "For you", root_path, role: "tab", "aria-selected": (@tab == "following").to_s,
+        class: "flex-1 rounded-lg px-3 py-1.5 text-center transition #{tab_class.call(@tab == 'following')}" %>
+  <%= link_to "Explore", root_path(tab: "explore"), role: "tab", "aria-selected": (@tab == "explore").to_s,
+        class: "flex-1 rounded-lg px-3 py-1.5 text-center transition #{tab_class.call(@tab == 'explore')}" %>
 </div>
 
-<div id="posts" class="mt-4 space-y-4">
+<%# aria-relevant=additions keeps this to "a new post arrived" rather than
+    re-reading the whole timeline on every stream update. %>
+<div id="posts" class="mt-4 space-y-4" aria-live="polite" aria-relevant="additions">
   <% if @posts.empty? %>
     <%= render "posts/empty", tab: @tab %>
   <% end %>
-  <%= render "posts/page", posts: @posts, has_more: @has_more, tab: @tab, before: params[:before] %>
+  <%= render "posts/page", posts: @posts, has_more: @has_more, before: params[:before],
+      next_page_url: ->(cursor) { posts_path(before: cursor, tab: @tab) } %>
 </div>

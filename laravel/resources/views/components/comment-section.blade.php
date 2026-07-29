@@ -53,7 +53,7 @@ new class extends Component
     <form wire:submit="addComment" class="mb-4 flex gap-3">
         <x-avatar :user="auth()->user()" size="size-9" text="text-xs" :link="false" />
         <div class="flex-1">
-            @error('body') <p class="mb-1 text-xs text-red-600">{{ $message }}</p> @enderror
+            @error('body') <p role="alert" class="mb-1 text-xs text-red-600">{{ $message }}</p> @enderror
             <div class="card flex items-end gap-2 px-3 py-2">
                 <textarea wire:model="body" rows="1" placeholder="Write a comment…"
                           x-on:input="count = $event.target.value.length; $el.style.height = 'auto'; $el.style.height = $el.scrollHeight + 'px'"

@@ -9,7 +9,7 @@
             @csrf
 
             @if ($errors->any())
-                <div class="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/40 dark:text-red-300">
+                <div role="alert" class="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/40 dark:text-red-300">
                     {{ $errors->first() }}
                 </div>
             @endif
@@ -17,7 +17,7 @@
             <div>
                 <label for="email" class="label">Email</label>
                 <input id="email" name="email" type="email" required autofocus autocomplete="username"
-                       value="{{ old('email') }}" placeholder="you@example.com" class="input">
+                       value="{{ old('email') }}" placeholder="you@example.com" @error('email') aria-invalid="true" @enderror class="input">
             </div>
 
             <button type="submit" class="btn-primary w-full cursor-pointer">Email reset instructions</button>

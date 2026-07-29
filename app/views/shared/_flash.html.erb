@@ -1,4 +1,5 @@
-<div class="pointer-events-none fixed inset-x-0 top-4 z-[60] flex flex-col items-center gap-2 px-4" id="flash">
+<div class="pointer-events-none fixed inset-x-0 top-4 z-[60] flex flex-col items-center gap-2 px-4" id="flash"
+     role="status" aria-live="polite" aria-atomic="false">
   <% flash.each do |type, message| %>
     <% variant = flash_variant(type) %>
     <div data-controller="toast"

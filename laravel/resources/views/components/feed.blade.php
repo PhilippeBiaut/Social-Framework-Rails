@@ -97,12 +97,15 @@ new #[Title('Feed')] class extends Component
 ?>
 
 <div>
+    <h1 class="sr-only">Your feed</h1>
+
     <livewire:post-composer />
 
     {{-- Feed tabs --}}
-    <div class="mt-6 flex rounded-xl border border-gray-200 bg-white p-1 text-sm font-medium dark:border-gray-700 dark:bg-gray-800">
+    <div class="mt-6 flex rounded-xl border border-gray-200 bg-white p-1 text-sm font-medium dark:border-gray-700 dark:bg-gray-800" role="tablist">
         @foreach (['following' => 'For you', 'explore' => 'Explore'] as $value => $label)
-            <button type="button" wire:click="$set('tab', '{{ $value }}')"
+            <button type="button" wire:click="$set('tab', '{{ $value }}')" role="tab"
+                    aria-selected="{{ $tab === $value ? 'true' : 'false' }}"
                     @class([
                         'flex-1 rounded-lg px-3 py-1.5 text-center transition',
                         'bg-indigo-600 text-white shadow' => $tab === $value,
@@ -113,7 +116,9 @@ new #[Title('Feed')] class extends Component
         @endforeach
     </div>
 
-    <div class="mt-4 space-y-4">
+    {{-- aria-relevant=additions keeps this to "a new post arrived" rather than
+         re-reading the whole timeline on every update. --}}
+    <div class="mt-4 space-y-4" aria-live="polite" aria-relevant="additions">
         @forelse ($posts as $post)
             <livewire:post-card :post="$post" :key="'post-'.$post->id" />
         @empty

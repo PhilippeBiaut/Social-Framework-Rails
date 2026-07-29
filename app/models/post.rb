@@ -1,4 +1,8 @@
 class Post < ApplicationRecord
+  # Every list of posts is paged, feed and profile alike: rendering a whole
+  # timeline took seconds once an author had a few thousand posts.
+  PER_PAGE = 10
+
   belongs_to :user
   has_one_attached :image
 

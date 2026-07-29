@@ -16,6 +16,8 @@ new #[Title('Post')] class extends Component
 ?>
 
 <div>
+    <h1 class="sr-only">Post by {{ $post->user->displayName() }}</h1>
+
     <a href="{{ route('feed') }}" wire:navigate
        class="mb-4 inline-flex items-center gap-1 text-sm text-muted hover:text-gray-900 dark:hover:text-white">
         <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>

@@ -1,5 +1,8 @@
-<%# One "page" of the feed. The lazy nested frame gives us infinite scroll for
-    free — Turbo loads it automatically when it scrolls into view.
+<%# One page of a post list — used by the feed and by a profile. The lazy nested
+    frame gives infinite scroll for free: Turbo loads it when it scrolls in.
+
+    `next_page_url` is a lambda taking the cursor, so the caller decides whether
+    the next page comes from /posts or /users/:username.
 
     The frame carries `block space-y-4` itself: <turbo-frame> is inline by
     default, so the container's spacing would apply to the frame instead of to
@@ -9,7 +12,7 @@
 
   <% if has_more %>
     <%= turbo_frame_tag "page_#{posts.last.id}",
-          src: posts_path(before: posts.last.id, tab: tab),
+          src: next_page_url.call(posts.last.id),
           loading: :lazy, class: "block space-y-4" do %>
       <div class="flex justify-center py-6">
         <svg class="size-6 animate-spin text-indigo-500" fill="none" viewBox="0 0 24 24">

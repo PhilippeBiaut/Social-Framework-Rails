@@ -4,7 +4,7 @@
   <%= avatar_for current_user, size: "size-9", text: "text-xs", link: false %>
   <div class="flex-1">
     <% if comment.errors.any? %>
-      <p class="mb-1 text-xs text-red-600"><%= comment.errors.full_messages.to_sentence %></p>
+      <p role="alert" class="mb-1 text-xs text-red-600"><%= comment.errors.full_messages.to_sentence %></p>
     <% end %>
     <div class="card flex items-end gap-2 px-3 py-2">
       <%= f.text_area :body, rows: 1, placeholder: "Write a comment…",

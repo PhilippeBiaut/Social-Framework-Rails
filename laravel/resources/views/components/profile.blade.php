@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use App\Models\User;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -12,9 +13,24 @@ new class extends Component
     #[Url]
     public string $tab = 'posts';
 
+    /** How many posts are on screen; grows as the sentinel scrolls into view. */
+    public int $shown = Post::PER_PAGE;
+
+    public bool $hasMore = false;
+
     public function mount(User $user): void
     {
         $this->user = $user;
+    }
+
+    public function updatedTab(): void
+    {
+        $this->shown = Post::PER_PAGE;
+    }
+
+    public function loadMore(): void
+    {
+        $this->shown += Post::PER_PAGE;
     }
 
     /**
@@ -26,12 +42,19 @@ new class extends Component
     {
         $this->user->loadCount(['posts', 'following', 'followers']);
 
-        $posts = $this->tab === 'likes'
-            ? $this->user->likedPosts()->withCardData()->recent()->get()
-            : $this->user->posts()->withCardData()->recent()->get();
+        $query = $this->tab === 'likes'
+            ? $this->user->likedPosts()
+            : $this->user->posts();
+
+        // Paged: rendering a whole timeline took seconds once an author had a
+        // few thousand posts.
+        $rows = $query->withCardData()->orderByDesc('posts.id')
+            ->limit($this->shown + 1)->get();
+
+        $this->hasMore = $rows->count() > $this->shown;
 
         return [
-            'posts' => $posts,
+            'posts' => $rows->take($this->shown),
             'title' => $this->user->displayName(),
         ];
     }
@@ -80,9 +103,10 @@ new class extends Component
     </div>
 
     <div class="mt-6">
-        <div class="flex border-b border-gray-200 text-sm font-medium dark:border-gray-700">
+        <div class="flex border-b border-gray-200 text-sm font-medium dark:border-gray-700" role="tablist">
             @foreach (['posts' => 'Posts', 'likes' => 'Likes'] as $value => $label)
                 <button type="button" wire:click="$set('tab', '{{ $value }}')" role="tab"
+                        aria-selected="{{ $tab === $value ? 'true' : 'false' }}"
                         @class([
                             '-mb-px border-b-2 px-4 py-2.5',
                             'border-indigo-600 text-indigo-600 dark:text-indigo-400' => $tab === $value,
@@ -101,6 +125,15 @@ new class extends Component
                     {{ $tab === 'likes' ? 'No liked posts yet.' : $user->displayName().' hasn\'t posted yet.' }}
                 </p>
             @endforelse
+
+            @if ($hasMore)
+                <div x-data x-intersect.margin.300px="$wire.loadMore()" class="flex justify-center py-6">
+                    <svg class="size-6 animate-spin text-indigo-500" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                    </svg>
+                </div>
+            @endif
         </div>
     </div>
 </div>

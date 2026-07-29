@@ -34,7 +34,7 @@
             @csrf
 
             @if ($errors->any())
-                <div class="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/40 dark:text-red-300">
+                <div role="alert" class="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/40 dark:text-red-300">
                     <ul class="list-inside list-disc">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -46,7 +46,7 @@
             <div>
                 <label for="email" class="label">Email</label>
                 <input id="email" name="email" type="email" required autofocus autocomplete="email"
-                       value="{{ old('email') }}" placeholder="you@example.com" class="input">
+                       value="{{ old('email') }}" placeholder="you@example.com" @error('email') aria-invalid="true" @enderror class="input">
             </div>
 
             <div>
@@ -54,19 +54,19 @@
                 <div class="flex">
                     <span class="inline-flex items-center rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 px-3 text-sm text-gray-600 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-300">&#64;</span>
                     <input id="username" name="username" required autocomplete="off"
-                           value="{{ old('username') }}" placeholder="yourname" class="input !rounded-l-none">
+                           value="{{ old('username') }}" placeholder="yourname" @error('username') aria-invalid="true" @enderror class="input !rounded-l-none">
                 </div>
             </div>
 
             <div>
                 <label for="name" class="label">Display name</label>
-                <input id="name" name="name" value="{{ old('name') }}" placeholder="Optional" class="input">
+                <input id="name" name="name" value="{{ old('name') }}" placeholder="Optional" @error('name') aria-invalid="true" @enderror class="input">
             </div>
 
             <div>
                 <label for="password" class="label">Password</label>
                 <div class="relative">
-                    <input id="password" name="password" required autocomplete="new-password" maxlength="72"
+                    <input id="password" name="password" required autocomplete="new-password" maxlength="72" @error('password') aria-invalid="true" @enderror
                            class="input pr-10" x-model="password" :type="show ? 'text' : 'password'">
                     <button type="button" @click="show = !show" tabindex="-1"
                             class="absolute inset-y-0 right-0 flex items-center px-3 text-muted hover:text-gray-600 dark:hover:text-gray-200"
@@ -88,7 +88,7 @@
             <div>
                 <label for="password_confirmation" class="label">Confirm password</label>
                 <input id="password_confirmation" name="password_confirmation" type="password" required
-                       autocomplete="new-password" maxlength="72" placeholder="Repeat your password" class="input">
+                       autocomplete="new-password" maxlength="72" placeholder="Repeat your password" @error('password_confirmation') aria-invalid="true" @enderror class="input">
             </div>
 
             <button type="submit" class="btn-primary w-full cursor-pointer">Create account</button>

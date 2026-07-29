@@ -21,15 +21,19 @@
         @livewireStyles
     </head>
     <body class="min-h-screen bg-gray-50 font-sans text-gray-900 antialiased dark:bg-gray-900 dark:text-gray-100">
+        <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[80] focus:rounded-lg focus:bg-indigo-600 focus:px-4 focus:py-2 focus:text-white">
+            Skip to content
+        </a>
+
         <x-flash />
 
         @auth
             <x-navbar />
-            <main class="mx-auto max-w-2xl px-4 pb-24 pt-6 sm:pt-8">
+            <main id="main" class="mx-auto max-w-2xl px-4 pb-24 pt-6 sm:pt-8">
                 {{ $slot }}
             </main>
         @else
-            <main class="flex min-h-screen items-center justify-center px-4 py-10">
+            <main id="main" class="flex min-h-screen items-center justify-center px-4 py-10">
                 {{ $slot }}
             </main>
         @endauth

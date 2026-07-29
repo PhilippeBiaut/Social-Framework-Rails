@@ -12,7 +12,7 @@
             @csrf
 
             @if ($errors->any())
-                <div class="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/40 dark:text-red-300">
+                <div role="alert" class="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/40 dark:text-red-300">
                     {{ $errors->first() }}
                 </div>
             @endif
@@ -20,7 +20,7 @@
             <div>
                 <label for="email" class="label">Email</label>
                 <input id="email" name="email" type="email" required autofocus autocomplete="username"
-                       value="{{ old('email') }}" placeholder="you@example.com" class="input">
+                       value="{{ old('email') }}" placeholder="you@example.com" @error('email') aria-invalid="true" @enderror class="input">
             </div>
 
             <div>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="relative mt-2">
                     <input id="password" name="password" required autocomplete="current-password" maxlength="72"
-                           placeholder="Your password" class="input pr-10"
+                           placeholder="Your password" @error('password') aria-invalid="true" @enderror class="input pr-10"
                            :type="show ? 'text' : 'password'">
                     <button type="button" @click="show = !show" tabindex="-1"
                             class="absolute inset-y-0 right-0 flex items-center px-3 text-muted hover:text-gray-600 dark:hover:text-gray-200"

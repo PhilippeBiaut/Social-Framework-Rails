@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  POSTS_PER_PAGE = 10
+  include PaginatedPosts
 
   before_action :set_post, only: %i[show]
 
@@ -7,16 +7,8 @@ class PostsController < ApplicationController
     @tab = params[:tab] == "explore" ? "explore" : "following"
 
     scope = @tab == "explore" ? Post.all : current_user.feed
-
-    # Ordering by id (not created_at) keeps the feed consistent with the `before`
-    # cursor below: ids are monotonic, so pages can't overlap or skip rows.
-    scope = scope.with_card_data.order(id: :desc)
-    scope = scope.where("posts.id < ?", params[:before]) if params[:before].present?
-
-    records   = scope.limit(POSTS_PER_PAGE + 1).to_a
-    @has_more = records.size > POSTS_PER_PAGE
-    @posts    = records.first(POSTS_PER_PAGE)
-    @post     = Post.new
+    @posts, @has_more = page_of_posts(scope)
+    @post = Post.new
     # Pagination is served through lazy Turbo Frames, which request HTML.
   end
 

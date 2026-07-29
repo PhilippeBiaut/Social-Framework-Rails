@@ -18,6 +18,12 @@ class Post extends Model
     /** @use HasFactory<PostFactory> */
     use HasFactory;
 
+    /**
+     * Every list of posts is paged, feed and profile alike: rendering a whole
+     * timeline took seconds once an author had a few thousand posts.
+     */
+    public const PER_PAGE = 10;
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

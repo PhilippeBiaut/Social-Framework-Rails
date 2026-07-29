@@ -5,7 +5,8 @@
     ])->filter();
 @endphp
 
-<div class="pointer-events-none fixed inset-x-0 top-4 z-[60] flex flex-col items-center gap-2 px-4">
+<div class="pointer-events-none fixed inset-x-0 top-4 z-[60] flex flex-col items-center gap-2 px-4"
+     role="status" aria-live="polite" aria-atomic="false">
     @foreach ($messages as $type => $message)
         <div x-data="{ show: true }"
              x-show="show"

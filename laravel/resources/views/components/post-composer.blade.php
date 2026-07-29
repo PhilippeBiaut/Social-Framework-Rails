@@ -43,8 +43,8 @@ new class extends Component
 
 <div class="card p-4" x-data="{ count: 0 }" x-on:post-created.window="count = 0">
     <form wire:submit="save" class="space-y-3">
-        @error('body') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
-        @error('image') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
+        @error('body') <p role="alert" class="text-sm text-red-600">{{ $message }}</p> @enderror
+        @error('image') <p role="alert" class="text-sm text-red-600">{{ $message }}</p> @enderror
 
         <div class="flex gap-3">
             <x-avatar :user="auth()->user()" :link="false" />

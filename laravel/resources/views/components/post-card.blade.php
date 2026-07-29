@@ -75,6 +75,8 @@ new class extends Component
                     <img src="{{ $post->imageUrl() }}" alt="Post image" class="max-h-96 w-full rounded-xl object-cover">
                 </button>
                 <div x-show="open" x-cloak @click.self="open = false" @keydown.escape.window="open = false"
+                     x-trap.noscroll="open"
+                     role="dialog" aria-modal="true" aria-label="Post image"
                      class="fixed inset-0 z-[70] flex items-center justify-center bg-black/80 p-4">
                     <img src="{{ $post->imageUrl() }}" alt="Post image" class="max-h-[90vh] max-w-full rounded-lg shadow-2xl">
                     <button type="button" @click="open = false" aria-label="Close"
@@ -88,11 +90,15 @@ new class extends Component
 
     <footer class="mt-3 flex items-center gap-1 border-t border-gray-100 pt-2 dark:border-gray-700">
         {{-- Optimistic like: Alpine flips the heart instantly, the server response reconciles it. --}}
+        {{-- aria-pressed carries the state and aria-label the meaning: on its own
+             the button reads as a bare number to a screen reader. --}}
         <button type="button" wire:click="toggleLike"
                 x-data="{ liked: @js($liked), count: @js($post->likes_count) }"
                 @click="liked = !liked; count += liked ? 1 : -1"
+                :aria-pressed="liked ? 'true' : 'false'"
+                :aria-label="(liked ? 'Unlike' : 'Like') + ' this post, ' + count + (count === 1 ? ' like' : ' likes')"
                 class="btn-ghost !px-2.5 text-muted">
-            <svg class="size-5 transition-transform duration-150"
+            <svg class="size-5 transition-transform duration-150" aria-hidden="true"
                  :class="liked ? 'fill-current text-red-500 scale-110' : ''"
                  fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>

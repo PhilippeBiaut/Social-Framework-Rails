@@ -53,7 +53,8 @@
 
   <div class="mt-4 space-y-4">
     <% if @posts.any? %>
-      <%= render partial: "posts/post", collection: @posts %>
+      <%= render "posts/page", posts: @posts, has_more: @has_more, before: params[:before],
+            next_page_url: ->(cursor) { user_path(@user, tab: @tab, before: cursor) } %>
     <% else %>
       <p class="card p-6 text-center text-sm text-muted">
         <%= @tab == "likes" ? "No liked posts yet." : "#{@user.display_name} hasn't posted yet." %>

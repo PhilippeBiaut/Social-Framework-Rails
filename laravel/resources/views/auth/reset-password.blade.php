@@ -10,7 +10,7 @@
             <input type="hidden" name="token" value="{{ $token }}">
 
             @if ($errors->any())
-                <div class="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/40 dark:text-red-300">
+                <div role="alert" class="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/40 dark:text-red-300">
                     <ul class="list-inside list-disc">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -22,14 +22,14 @@
             <div>
                 <label for="email" class="label">Email</label>
                 <input id="email" name="email" type="email" required autocomplete="username"
-                       value="{{ old('email', $email) }}" class="input">
+                       value="{{ old('email', $email) }}" @error('email') aria-invalid="true" @enderror class="input">
             </div>
 
             <div>
                 <label for="password" class="label">New password</label>
                 <div class="relative">
                     <input id="password" name="password" required autocomplete="new-password" maxlength="72"
-                           placeholder="Enter new password" class="input pr-10"
+                           placeholder="Enter new password" @error('password') aria-invalid="true" @enderror class="input pr-10"
                            :type="show ? 'text' : 'password'">
                     <button type="button" @click="show = !show" tabindex="-1"
                             class="absolute inset-y-0 right-0 flex items-center px-3 text-muted hover:text-gray-600 dark:hover:text-gray-200"
@@ -43,7 +43,7 @@
             <div>
                 <label for="password_confirmation" class="label">Confirm password</label>
                 <input id="password_confirmation" name="password_confirmation" type="password" required
-                       autocomplete="new-password" maxlength="72" placeholder="Repeat new password" class="input">
+                       autocomplete="new-password" maxlength="72" placeholder="Repeat new password" @error('password_confirmation') aria-invalid="true" @enderror class="input">
             </div>
 
             <button type="submit" class="btn-primary w-full cursor-pointer">Save</button>

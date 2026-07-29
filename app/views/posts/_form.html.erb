@@ -3,7 +3,7 @@
               action: "turbo:submit-end->char-counter#update" } do |f| %>
 
   <% if post.errors.any? %>
-    <div class="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/40 dark:text-red-300">
+    <div role="alert" class="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/40 dark:text-red-300">
       <%= post.errors.full_messages.to_sentence %>
     </div>
   <% end %>

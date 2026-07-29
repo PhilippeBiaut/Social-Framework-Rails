@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include PaginatedPosts
+
   before_action :set_user, only: %i[show following followers]
 
   def index
@@ -19,11 +21,8 @@ class UsersController < ApplicationController
     # element ids and left one copy stale after a Turbo Stream update.
     @tab = params[:tab] == "likes" ? "likes" : "posts"
 
-    @posts = if @tab == "likes"
-      @user.liked_posts.with_card_data.recent
-    else
-      @user.posts.with_card_data.recent
-    end
+    scope = @tab == "likes" ? @user.liked_posts : @user.posts
+    @posts, @has_more = page_of_posts(scope)
   end
 
   def following
