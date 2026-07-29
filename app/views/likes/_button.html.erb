@@ -2,7 +2,7 @@
 <div id="post_<%= post.id %>_like" class="inline-flex"
      data-controller="like" data-like-liked-value="<%= liked %>">
   <%= button_to post_like_path(post), method: liked ? :delete : :post,
-        class: "btn-ghost !px-2.5 text-gray-500",
+        class: "btn-ghost !px-2.5 text-muted",
         data: { action: "like#toggle" } do %>
     <svg data-like-target="icon"
          class="size-5 transition-transform duration-150 <%= 'fill-current text-red-500' if liked %>"

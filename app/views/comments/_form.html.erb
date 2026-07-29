@@ -11,8 +11,8 @@
             data: { controller: "autosize",
                     char_counter_target: "input",
                     action: "input->char-counter#update input->autosize#resize" },
-            class: "w-full resize-none border-0 bg-transparent p-0 text-sm text-gray-900 placeholder-gray-400 focus:ring-0 dark:text-white" %>
-      <span class="text-xs tabular-nums text-gray-300" data-char-counter-target="output">500</span>
+            class: "w-full resize-none border-0 bg-transparent p-0 text-sm text-gray-900 placeholder-muted focus:ring-0 dark:text-white" %>
+      <span class="text-xs tabular-nums text-muted" data-char-counter-target="output">500</span>
       <%= f.submit "Send", data: { char_counter_target: "submit" },
             class: "btn-primary !px-3 !py-1.5 cursor-pointer disabled:opacity-40" %>
     </div>

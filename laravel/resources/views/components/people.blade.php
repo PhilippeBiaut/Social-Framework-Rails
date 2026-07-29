@@ -31,7 +31,7 @@ new #[Title('People')] class extends Component
     <h1 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Discover people</h1>
 
     <div class="relative mb-4">
-        <span class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-gray-400">
+        <span class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-muted">
             <svg class="size-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
         </span>
         <input wire:model.live.debounce.300ms="q" type="search" autocomplete="off"
@@ -42,7 +42,7 @@ new #[Title('People')] class extends Component
         @forelse ($users as $user)
             <x-user-row :user="$user" :key="'user-'.$user->id" />
         @empty
-            <p class="card p-6 text-center text-sm text-gray-500">No one matches “{{ $q }}”.</p>
+            <p class="card p-6 text-center text-sm text-muted">No one matches “{{ $q }}”.</p>
         @endforelse
     </div>
 </div>

@@ -4,7 +4,7 @@
     <div class="mx-auto flex max-w-2xl items-center justify-between gap-2 px-4 py-2.5">
         <a href="{{ route('feed') }}" wire:navigate
            class="flex items-center gap-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-            <span class="grid size-8 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 text-white">
+            <span class="grid size-8 place-items-center rounded-xl bg-gradient-to-br from-indigo-600 to-fuchsia-600 text-white">
                 <svg class="size-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a4 4 0 100 8 4 4 0 000-8zM4 15a6 6 0 1112 0v1a1 1 0 01-1 1H5a1 1 0 01-1-1v-1z"/></svg>
             </span>
             <span class="hidden sm:inline">Social</span>
@@ -49,7 +49,7 @@
                      class="absolute right-0 z-50 mt-2 w-52 origin-top-right rounded-xl border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-700 dark:bg-gray-800">
                     <div class="border-b border-gray-100 px-4 py-2 dark:border-gray-700">
                         <p class="truncate text-sm font-semibold text-gray-900 dark:text-white">{{ $me->displayName() }}</p>
-                        <p class="truncate text-xs text-gray-400">&#64;{{ $me->username }}</p>
+                        <p class="truncate text-xs text-muted">&#64;{{ $me->username }}</p>
                     </div>
                     <a href="{{ route('users.show', $me) }}" wire:navigate class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">My profile</a>
                     <a href="{{ route('profile.edit') }}" wire:navigate class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Edit profile</a>

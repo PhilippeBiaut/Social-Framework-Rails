@@ -106,7 +106,7 @@ new #[Title('Feed')] class extends Component
                     @class([
                         'flex-1 rounded-lg px-3 py-1.5 text-center transition',
                         'bg-indigo-600 text-white shadow' => $tab === $value,
-                        'text-gray-500 hover:text-gray-900 dark:hover:text-white' => $tab !== $value,
+                        'text-muted hover:text-gray-900 dark:hover:text-white' => $tab !== $value,
                     ])>
                 {{ $label }}
             </button>

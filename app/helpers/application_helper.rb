@@ -10,7 +10,7 @@ module ApplicationHelper
       else
         content_tag :span, user.initials,
                     class: "#{size} #{text} #{ring_class} inline-flex items-center justify-center rounded-full " \
-                           "bg-gradient-to-br from-indigo-500 to-fuchsia-500 font-semibold text-white select-none"
+                           "bg-gradient-to-br from-indigo-600 to-fuchsia-600 font-semibold text-white select-none"
       end
 
     link ? link_to(inner, user_path(user), class: "shrink-0", data: { turbo_frame: "_top" }) : inner
@@ -19,7 +19,7 @@ module ApplicationHelper
   def timestamp(time)
     content_tag :time, relative_time(time),
                 datetime: time.iso8601, title: time.strftime("%B %-d, %Y at %H:%M"),
-                class: "text-xs text-gray-400"
+                class: "text-xs text-muted"
   end
 
   # Deliberately hand-rolled rather than `time_ago_in_words`: it rounds ("about

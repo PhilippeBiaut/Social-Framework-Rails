@@ -52,7 +52,7 @@ new class extends Component
             <div class="flex-1 space-y-2">
                 <textarea wire:model="body" rows="2" placeholder="What's happening?"
                           x-on:input="count = $event.target.value.length; $el.style.height = 'auto'; $el.style.height = $el.scrollHeight + 'px'"
-                          class="w-full resize-none border-0 bg-transparent p-0 text-base text-gray-900 placeholder-gray-400 focus:ring-0 dark:text-white"></textarea>
+                          class="w-full resize-none border-0 bg-transparent p-0 text-base text-gray-900 placeholder-muted focus:ring-0 dark:text-white"></textarea>
 
                 @if ($image)
                     <div class="relative">
@@ -64,7 +64,7 @@ new class extends Component
                     </div>
                 @endif
 
-                <div wire:loading wire:target="image" class="text-xs text-gray-400">Uploading image…</div>
+                <div wire:loading wire:target="image" class="text-xs text-muted">Uploading image…</div>
             </div>
         </div>
 
@@ -79,7 +79,7 @@ new class extends Component
                       :class="{
                           'text-red-500': count > {{ $maxLength }},
                           'text-amber-500': count <= {{ $maxLength }} && count > {{ $maxLength }} * 0.9,
-                          'text-gray-400': count <= {{ $maxLength }} * 0.9
+                          'text-muted': count <= {{ $maxLength }} * 0.9
                       }"
                       x-text="{{ $maxLength }} - count">{{ $maxLength }}</span>
 

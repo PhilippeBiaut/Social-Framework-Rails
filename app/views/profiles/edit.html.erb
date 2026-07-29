@@ -31,7 +31,7 @@
   <div>
     <%= f.label :username, class: "label" %>
     <div class="flex">
-      <span class="inline-flex items-center rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 px-3 text-sm text-gray-500 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-300">@</span>
+      <span class="inline-flex items-center rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 px-3 text-sm text-gray-600 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-300">@</span>
       <%= f.text_field :username, class: "input !rounded-l-none", autocomplete: "off" %>
     </div>
   </div>
@@ -47,7 +47,7 @@
           data: { controller: "autosize", char_counter_target: "input",
                   action: "input->char-counter#update input->autosize#resize" },
           class: "input resize-none", placeholder: "Tell people about yourself" %>
-    <p class="mt-1 text-right text-xs text-gray-400"><span data-char-counter-target="output">280</span> left</p>
+    <p class="mt-1 text-right text-xs text-muted"><span data-char-counter-target="output">280</span> left</p>
   </div>
 
   <div class="flex items-center gap-3">

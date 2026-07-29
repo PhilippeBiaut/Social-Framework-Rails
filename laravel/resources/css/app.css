@@ -38,10 +38,18 @@
     @apply rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800;
 }
 @utility input {
-    @apply block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400;
+    @apply block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-300;
 }
 @utility label {
     @apply mb-2 block text-sm font-medium text-gray-900 dark:text-white;
+}
+/* Muted body text that still clears WCAG AA (4.5:1) on our surfaces:
+   gray-400 is only 2.60:1 on white and gray-500 only 3.04:1 on gray-800. */
+@utility text-muted {
+    @apply text-gray-500 dark:text-gray-400;
+}
+@utility placeholder-muted {
+    @apply placeholder-gray-500 dark:placeholder-gray-300;
 }
 @utility avatar-ring {
     @apply ring-2 ring-transparent transition hover:ring-indigo-400;

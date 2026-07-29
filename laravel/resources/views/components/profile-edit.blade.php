@@ -82,13 +82,13 @@ new #[Title('Edit profile')] class extends Component
                 Change photo
                 <input type="file" wire:model="avatar" accept="image/*" class="hidden">
             </label>
-            <span wire:loading wire:target="avatar" class="text-xs text-gray-400">Uploading…</span>
+            <span wire:loading wire:target="avatar" class="text-xs text-muted">Uploading…</span>
         </div>
 
         <div>
             <label for="username" class="label">Username</label>
             <div class="flex">
-                <span class="inline-flex items-center rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 px-3 text-sm text-gray-500 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-300">&#64;</span>
+                <span class="inline-flex items-center rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 px-3 text-sm text-gray-600 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-300">&#64;</span>
                 <input id="username" wire:model="username" autocomplete="off" class="input !rounded-l-none">
             </div>
         </div>
@@ -106,7 +106,7 @@ new #[Title('Edit profile')] class extends Component
                       x-init="$el.style.height = 'auto'; $el.style.height = $el.scrollHeight + 'px'"
                       x-on:input="count = $event.target.value.length; $el.style.height = 'auto'; $el.style.height = $el.scrollHeight + 'px'"
                       class="input resize-none"></textarea>
-            <p class="mt-1 text-right text-xs text-gray-400">
+            <p class="mt-1 text-right text-xs text-muted">
                 <span x-text="{{ $maxBio }} - count">{{ $maxBio - mb_strlen($bio) }}</span> left
             </p>
         </div>

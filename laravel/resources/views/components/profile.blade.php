@@ -61,13 +61,13 @@ new class extends Component
 
             <div class="mt-2">
                 <h1 class="text-xl font-bold text-gray-900 dark:text-white">{{ $user->displayName() }}</h1>
-                <p class="text-sm text-gray-400">&#64;{{ $user->username }}</p>
+                <p class="text-sm text-muted">&#64;{{ $user->username }}</p>
                 @if ($user->bio)
                     <p class="mt-2 whitespace-pre-wrap text-gray-700 dark:text-gray-200">{{ $user->bio }}</p>
                 @endif
             </div>
 
-            <div class="mt-3 flex gap-5 text-sm text-gray-500">
+            <div class="mt-3 flex gap-5 text-sm text-muted">
                 <span><span class="font-semibold text-gray-900 dark:text-white">{{ $user->posts_count }}</span> Posts</span>
                 <a href="{{ route('users.following', $user) }}" wire:navigate class="hover:underline">
                     <span class="font-semibold text-gray-900 dark:text-white">{{ $user->following_count }}</span> Following
@@ -86,7 +86,7 @@ new class extends Component
                         @class([
                             '-mb-px border-b-2 px-4 py-2.5',
                             'border-indigo-600 text-indigo-600 dark:text-indigo-400' => $tab === $value,
-                            'border-transparent text-gray-500 hover:text-gray-900 dark:hover:text-white' => $tab !== $value,
+                            'border-transparent text-muted hover:text-gray-900 dark:hover:text-white' => $tab !== $value,
                         ])>
                     {{ $label }}
                 </button>
@@ -97,7 +97,7 @@ new class extends Component
             @forelse ($posts as $post)
                 <livewire:post-card :post="$post" :key="'post-'.$post->id" />
             @empty
-                <p class="card p-6 text-center text-sm text-gray-500">
+                <p class="card p-6 text-center text-sm text-muted">
                     {{ $tab === 'likes' ? 'No liked posts yet.' : $user->displayName().' hasn\'t posted yet.' }}
                 </p>
             @endforelse

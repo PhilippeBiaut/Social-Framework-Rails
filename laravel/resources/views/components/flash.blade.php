@@ -20,7 +20,7 @@
             ])>{{ $type === 'success' ? '✓' : '!' }}</span>
             <p class="flex-1 text-sm font-medium text-gray-700 dark:text-gray-200">{{ $message }}</p>
             <button type="button" @click="show = false"
-                    class="rounded-lg p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700"
+                    class="rounded-lg p-1 text-muted hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700"
                     aria-label="Dismiss">
                 <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>

@@ -5,7 +5,7 @@
       <div class="flex items-center justify-between gap-2">
         <div class="flex flex-wrap items-baseline gap-x-2">
           <%= link_to comment.user.display_name, user_path(comment.user), class: "text-sm font-semibold text-gray-900 hover:underline dark:text-white" %>
-          <span class="text-xs text-gray-400">@<%= comment.user.username %></span>
+          <span class="text-xs text-muted">@<%= comment.user.username %></span>
           <%= timestamp comment.created_at %>
         </div>
         <% if comment.user == current_user %>
@@ -13,7 +13,7 @@
               adding a line box of its own to the flex row. %>
           <%= button_to post_comment_path(comment.post, comment), method: :delete,
                 form: { data: { turbo_confirm: "Delete this comment?" }, class: "contents" },
-                class: "text-gray-300 hover:text-red-500" do %>
+                class: "text-muted hover:text-red-500" do %>
             <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
           <% end %>
         <% end %>

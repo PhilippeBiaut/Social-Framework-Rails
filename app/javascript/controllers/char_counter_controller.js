@@ -22,7 +22,8 @@ export default class extends Controller {
     const over = remaining < 0
     this.outputTarget.classList.toggle("text-amber-500", warn && !over)
     this.outputTarget.classList.toggle("text-red-500", over)
-    this.outputTarget.classList.toggle("text-gray-400", !warn && !over)
+    // text-muted, not text-gray-400: the latter is only 2.6:1 on white.
+    this.outputTarget.classList.toggle("text-muted", !warn && !over)
 
     if (this.hasSubmitTarget) this.submitTarget.disabled = over || length === 0
   }

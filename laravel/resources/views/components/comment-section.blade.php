@@ -45,9 +45,9 @@ new class extends Component
 ?>
 
 <section class="mt-6" x-data="{ count: 0 }" x-on:comment-added.window="count = 0">
-    <h2 class="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-500">
+    <h2 class="mb-3 flex items-center gap-2 text-sm font-semibold text-muted">
         Comments
-        <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs dark:bg-gray-700">{{ $comments->count() }}</span>
+        <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-700 dark:text-gray-300">{{ $comments->count() }}</span>
     </h2>
 
     <form wire:submit="addComment" class="mb-4 flex gap-3">
@@ -57,8 +57,8 @@ new class extends Component
             <div class="card flex items-end gap-2 px-3 py-2">
                 <textarea wire:model="body" rows="1" placeholder="Write a comment…"
                           x-on:input="count = $event.target.value.length; $el.style.height = 'auto'; $el.style.height = $el.scrollHeight + 'px'"
-                          class="w-full resize-none border-0 bg-transparent p-0 text-sm text-gray-900 placeholder-gray-400 focus:ring-0 dark:text-white"></textarea>
-                <span class="text-xs tabular-nums text-gray-300" x-text="{{ $maxLength }} - count">{{ $maxLength }}</span>
+                          class="w-full resize-none border-0 bg-transparent p-0 text-sm text-gray-900 placeholder-muted focus:ring-0 dark:text-white"></textarea>
+                <span class="text-xs tabular-nums text-muted" x-text="{{ $maxLength }} - count">{{ $maxLength }}</span>
                 <button type="submit" class="btn-primary !px-3 !py-1.5 cursor-pointer disabled:opacity-40"
                         :disabled="count === 0 || count > {{ $maxLength }}">
                     Send
@@ -77,13 +77,13 @@ new class extends Component
                             <div class="flex flex-wrap items-baseline gap-x-2">
                                 <a href="{{ route('users.show', $comment->user) }}" wire:navigate
                                    class="text-sm font-semibold text-gray-900 hover:underline dark:text-white">{{ $comment->user->displayName() }}</a>
-                                <span class="text-xs text-gray-400">&#64;{{ $comment->user->username }}</span>
+                                <span class="text-xs text-muted">&#64;{{ $comment->user->username }}</span>
                                 <x-timestamp :value="$comment->created_at" />
                             </div>
                             @if ($comment->user_id === auth()->id())
                                 <button type="button" wire:click="deleteComment({{ $comment->id }})"
                                         wire:confirm="Delete this comment?"
-                                        class="text-gray-300 hover:text-red-500">
+                                        class="text-muted hover:text-red-500">
                                     <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                                 </button>
                             @endif

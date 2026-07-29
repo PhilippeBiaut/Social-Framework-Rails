@@ -20,13 +20,13 @@
 
     <div class="mt-2">
       <h1 class="text-xl font-bold text-gray-900 dark:text-white"><%= @user.display_name %></h1>
-      <p class="text-sm text-gray-400">@<%= @user.username %></p>
+      <p class="text-sm text-muted">@<%= @user.username %></p>
       <% if @user.bio.present? %>
         <p class="mt-2 whitespace-pre-wrap text-gray-700 dark:text-gray-200"><%= @user.bio %></p>
       <% end %>
     </div>
 
-    <div class="mt-3 flex gap-5 text-sm text-gray-500">
+    <div class="mt-3 flex gap-5 text-sm text-muted">
       <span><span class="font-semibold text-gray-900 dark:text-white"><%= @user.posts.size %></span> Posts</span>
       <%= link_to following_user_path(@user), class: "hover:underline" do %>
         <span class="font-semibold text-gray-900 dark:text-white"><%= @user.following.size %></span> Following
@@ -47,7 +47,7 @@
             "aria-selected": (@tab == value).to_s,
             class: "-mb-px border-b-2 px-4 py-2.5 #{@tab == value ?
               'border-indigo-600 text-indigo-600 dark:text-indigo-400' :
-              'border-transparent text-gray-500 hover:text-gray-900 dark:hover:text-white'}" %>
+              'border-transparent text-muted hover:text-gray-900 dark:hover:text-white'}" %>
     <% end %>
   </div>
 
@@ -55,7 +55,7 @@
     <% if @posts.any? %>
       <%= render partial: "posts/post", collection: @posts %>
     <% else %>
-      <p class="card p-6 text-center text-sm text-gray-500">
+      <p class="card p-6 text-center text-sm text-muted">
         <%= @tab == "likes" ? "No liked posts yet." : "#{@user.display_name} hasn't posted yet." %>
       </p>
     <% end %>

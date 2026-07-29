@@ -15,7 +15,7 @@
             data: { controller: "autosize",
                     char_counter_target: "input",
                     action: "input->char-counter#update input->autosize#resize" },
-            class: "w-full resize-none border-0 bg-transparent p-0 text-base text-gray-900 placeholder-gray-400 focus:ring-0 dark:text-white" %>
+            class: "w-full resize-none border-0 bg-transparent p-0 text-base text-gray-900 placeholder-muted focus:ring-0 dark:text-white" %>
 
       <%# Image preview %>
       <div data-image-preview-target="wrapper" class="relative hidden">
@@ -36,7 +36,7 @@
     </label>
 
     <div class="flex items-center gap-3">
-      <span class="text-sm tabular-nums text-gray-400" data-char-counter-target="output">1000</span>
+      <span class="text-sm tabular-nums text-muted" data-char-counter-target="output">1000</span>
       <%= f.submit "Post", data: { char_counter_target: "submit" },
             class: "btn-primary cursor-pointer disabled:cursor-not-allowed disabled:opacity-40" %>
     </div>

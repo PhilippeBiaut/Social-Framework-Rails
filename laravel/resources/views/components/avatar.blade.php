@@ -18,7 +18,7 @@
     <img src="{{ $user->avatarUrl() }}" alt="{{ $user->displayName() }}"
          class="{{ $size }} {{ $ringClass }} rounded-full object-cover">
 @else
-    <span class="{{ $size }} {{ $text }} {{ $ringClass }} inline-flex items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-fuchsia-500 font-semibold text-white select-none">
+    <span class="{{ $size }} {{ $text }} {{ $ringClass }} inline-flex items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-fuchsia-600 font-semibold text-white select-none">
         {{ $user->initials() }}
     </span>
 @endif

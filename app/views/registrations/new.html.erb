@@ -2,11 +2,11 @@
 
 <div class="w-full max-w-md">
   <div class="mb-6 text-center">
-    <span class="mx-auto mb-3 grid size-12 place-items-center rounded-2xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 text-white">
+    <span class="mx-auto mb-3 grid size-12 place-items-center rounded-2xl bg-gradient-to-br from-indigo-600 to-fuchsia-600 text-white">
       <svg class="size-7" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a4 4 0 100 8 4 4 0 000-8zM4 15a6 6 0 1112 0v1a1 1 0 01-1 1H5a1 1 0 01-1-1v-1z"/></svg>
     </span>
     <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Create your account</h1>
-    <p class="text-sm text-gray-500">Join the conversation.</p>
+    <p class="text-sm text-muted">Join the conversation.</p>
   </div>
 
   <%= form_with model: @user, url: registration_path, class: "card space-y-4 p-6",
@@ -29,7 +29,7 @@
     <div>
       <%= f.label :username, class: "label" %>
       <div class="flex">
-        <span class="inline-flex items-center rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 px-3 text-sm text-gray-500 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-300">@</span>
+        <span class="inline-flex items-center rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 px-3 text-sm text-gray-600 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-300">@</span>
         <%= f.text_field :username, required: true, autocomplete: "off",
               class: "input !rounded-l-none", placeholder: "yourname" %>
       </div>
@@ -53,7 +53,7 @@
         <div class="h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-600">
           <div data-password-strength-target="bar" class="h-1.5 w-0 rounded-full bg-gray-200 transition-all dark:bg-gray-600"></div>
         </div>
-        <p class="mt-1 text-xs text-gray-400" data-password-strength-target="label"></p>
+        <p class="mt-1 text-xs text-muted" data-password-strength-target="label"></p>
       </div>
     </div>
 
@@ -66,7 +66,7 @@
     <%= f.submit "Create account", class: "btn-primary w-full cursor-pointer" %>
   <% end %>
 
-  <p class="mt-5 text-center text-sm text-gray-500">
+  <p class="mt-5 text-center text-sm text-muted">
     Already have an account?
     <%= link_to "Sign in", new_session_path, class: "font-semibold text-indigo-600 hover:underline dark:text-indigo-400" %>
   </p>

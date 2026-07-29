@@ -44,7 +44,7 @@ new class extends Component
             <div class="leading-tight">
                 <a href="{{ route('users.show', $post->user) }}" wire:navigate
                    class="font-semibold text-gray-900 hover:underline dark:text-white">{{ $post->user->displayName() }}</a>
-                <span class="text-sm text-gray-400">&#64;{{ $post->user->username }}</span>
+                <span class="text-sm text-muted">&#64;{{ $post->user->username }}</span>
                 <div><x-timestamp :value="$post->created_at" /></div>
             </div>
         </div>
@@ -52,7 +52,7 @@ new class extends Component
         @if ($post->user_id === auth()->id())
             <div class="relative" x-data="{ open: false }" @click.outside="open = false">
                 <button type="button" @click="open = !open" aria-label="Post menu"
-                        class="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
+                        class="rounded-lg p-1.5 text-muted hover:bg-gray-100 dark:hover:bg-gray-700">
                     <svg class="size-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/></svg>
                 </button>
                 <div x-show="open" x-cloak x-transition.opacity
@@ -91,7 +91,7 @@ new class extends Component
         <button type="button" wire:click="toggleLike"
                 x-data="{ liked: @js($liked), count: @js($post->likes_count) }"
                 @click="liked = !liked; count += liked ? 1 : -1"
-                class="btn-ghost !px-2.5 text-gray-500">
+                class="btn-ghost !px-2.5 text-muted">
             <svg class="size-5 transition-transform duration-150"
                  :class="liked ? 'fill-current text-red-500 scale-110' : ''"
                  fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
@@ -100,12 +100,12 @@ new class extends Component
             <span x-text="count">{{ $post->likes_count }}</span>
         </button>
 
-        <a href="{{ route('posts.show', $post) }}" wire:navigate class="btn-ghost !px-2.5 text-gray-500">
+        <a href="{{ route('posts.show', $post) }}" wire:navigate class="btn-ghost !px-2.5 text-muted">
             <svg class="size-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/></svg>
             <span>{{ $post->comments_count }}</span>
         </a>
 
-        <button type="button" class="btn-ghost !px-2.5 text-gray-500 ml-auto"
+        <button type="button" class="btn-ghost !px-2.5 text-muted ml-auto"
                 x-data="{ label: 'Share' }"
                 @click="navigator.clipboard.writeText('{{ route('posts.show', $post) }}').then(() => {
                     label = 'Copied!'; setTimeout(() => label = 'Share', 1500)
