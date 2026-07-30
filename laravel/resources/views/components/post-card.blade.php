@@ -7,6 +7,22 @@ new class extends Component
 {
     public Post $post;
 
+    /**
+     * The authoritative like state, entangled with the Alpine copy that drives
+     * the optimistic flip. Without a two-way binding, rapid clicking left the
+     * button showing a state the database did not have: Livewire coalesces the
+     * requests but Alpine had already counted every click, and a re-render does
+     * not reset Alpine's own state.
+     */
+    public bool $liked = false;
+
+    public int $likesCount = 0;
+
+    public function mount(): void
+    {
+        $this->syncLikeState();
+    }
+
     public function toggleLike(): void
     {
         $existing = $this->post->likes()->where('user_id', auth()->id());
@@ -18,6 +34,13 @@ new class extends Component
         }
 
         $this->post->refresh()->loadCount(['likes', 'comments'])->load('likes');
+        $this->syncLikeState();
+    }
+
+    private function syncLikeState(): void
+    {
+        $this->liked = $this->post->isLikedBy(auth()->user());
+        $this->likesCount = $this->post->likes_count ?? $this->post->likes()->count();
     }
 
     public function delete(): void
@@ -32,7 +55,7 @@ new class extends Component
 
     public function with(): array
     {
-        return ['liked' => $this->post->isLikedBy(auth()->user())];
+        return [];
     }
 };
 ?>
@@ -93,7 +116,7 @@ new class extends Component
         {{-- aria-pressed carries the state and aria-label the meaning: on its own
              the button reads as a bare number to a screen reader. --}}
         <button type="button" wire:click="toggleLike"
-                x-data="{ liked: @js($liked), count: @js($post->likes_count) }"
+                x-data="{ liked: @entangle('liked'), count: @entangle('likesCount') }"
                 @click="liked = !liked; count += liked ? 1 : -1"
                 :aria-pressed="liked ? 'true' : 'false'"
                 :aria-label="(liked ? 'Unlike' : 'Like') + ' this post, ' + count + (count === 1 ? ' like' : ' likes')"
@@ -103,7 +126,7 @@ new class extends Component
                  fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
             </svg>
-            <span x-text="count">{{ $post->likes_count }}</span>
+            <span x-text="count">{{ $likesCount }}</span>
         </button>
 
         <a href="{{ route('posts.show', $post) }}" wire:navigate class="btn-ghost !px-2.5 text-muted">
